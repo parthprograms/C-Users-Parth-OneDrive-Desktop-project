@@ -1,155 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Packages</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background-color: #0b0b0b; 
-            color: white; 
-            text-align: center; 
-            margin: 0;
-            background-image: url('new6.jpg');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Packages</title>
+<style>
+    /* ===== Existing CSS ===== */
+    body { 
+        font-family: Arial, sans-serif; 
+        background-color: #0b0b0b; 
+        color: white; 
+        text-align: center; 
+        margin: 0;
+        background-image: url('new6.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    nav {
+        background: rgba(0, 31, 63, 0.4);
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        backdrop-filter: blur(5px);
+    }
+    nav ul { list-style: none; padding: 0; margin: 0; }
+    nav ul li { display: inline; margin: 0 15px; }
+    nav ul li a { 
+        color: #fff; 
+        text-decoration: none; 
+        font-weight: bold; 
+        transition: color 0.3s; 
+    }
+    nav ul li a:hover { color: #66ccff; }
+    h1 {
+        font-size: 48px;
+        font-weight: bold;
+        font-style: italic;
+        letter-spacing: 2px;
+        background: linear-gradient(to right, #ffffff, #cce0ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+        background-color: rgba(255, 255, 255, 0.1);
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+    table { 
+        width: 80%; 
+        margin: 20px auto; 
+        border-collapse: collapse; 
+        background: rgba(0, 31, 63, 0.7);
+        box-shadow: 0px 0px 10px rgba(0, 51, 102, 0.6);
+        backdrop-filter: blur(5px);
+        display: none;
+    }
+    th, td { 
+        padding: 15px; 
+        border: 1px solid rgba(250, 251, 252, 0.4); 
+        color: white;
+    }
+    th { 
+        background: rgba(206, 212, 217, 0.6); 
+        color: #66ccff; 
+    }
+    button {
+        background: rgba(0, 51, 102, 0.6);
+        color: #66ccff;
+        border: 1px solid rgba(102, 204, 255, 0.6);
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+        margin: 10px;
+    }
+    button:hover {
+        background: rgba(0, 102, 204, 0.8);
+        color: white;
+        transform: scale(1.05);
+        box-shadow: 0px 0px 10px rgba(102, 204, 255, 0.8);
+    }
+    select {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(102, 204, 255, 0.6);
+        background: rgba(0, 51, 102, 0.6);
+        color: #fff;
+        backdrop-filter: blur(4px);
+        margin: 10px;
+    }
 
-        }
-        nav { 
-            background: #001f3f; 
-            color: #fff; 
-            padding: 15px; 
-            text-align: center; 
-        }
-        nav ul { list-style: none; padding: 0; margin: 0; }
-        nav ul li { display: inline; margin: 0 15px; }
-        nav ul li a { 
-            color: #fff; 
-            text-decoration: none; 
-            font-weight: bold; 
-            transition: color 0.3s; 
-        }
-        nav ul li a:hover { color: #66ccff; }
-        
-        h1 {
-    color: #66ccff;
-    background-color: rgba(0, 0, 0, 0.3); /* Transparent black overlay */
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 8px;
+    /* ===== New styles for cards & note ===== */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .card {
+        background: rgba(0, 31, 63, 0.7);
+        border: 1px solid rgba(102, 204, 255, 0.4);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        width: 250px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0px 0px 10px rgba(0, 51, 102, 0.6);
+        animation: fadeIn 0.5s ease-in;
+    }
+    .note {
+        background: rgba(255, 255, 0, 0.2);
+        color: #ffeb3b;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 10px;
+        display: none;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .table-buttons {
+        display: none;
+        margin-top: 15px;
+    }
+    .buy-btn {
+        background: rgba(0, 204, 102, 0.6);
+        border: 1px solid rgba(0, 255, 153, 0.6);
+        color: #b3ffdd;
+    }
+    .buy-btn:hover {
+        background: rgba(0, 204, 102, 0.8);
+        color: white;
+        box-shadow: 0px 0px 10px rgba(0, 255, 153, 0.8);
+    }
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+</style>
+
+<script>
+if (!sessionStorage.getItem("loggedInUser")) {
+    window.location.href = "login.html";
 }
 
-        table { 
-            width: 80%; 
-            margin: 20px auto; 
-            border-collapse: collapse; 
-            background: #001f3f; 
-            box-shadow: 0px 0px 10px #003366;
-        }
-        th, td { 
-            padding: 15px; 
-            border: 1px solid #004080; 
-            color: white;
-        }
-        th { background: #003366; color: #66ccff; }
+// ===== Editable Data =====
+const data = {
+    scooters: ["Scooter Model A", "Scooter Model B", "Scooter Model C"],
+    locations: ["Downtown", "East Side", "West Coast"],
+    serviceCenters: [
+        { name: "Downtown Service Hub", locations: ["Downtown", "East Side"], scooters: ["Scooter Model A", "Scooter Model B"] },
+        { name: "East Side Repairs", locations: ["East Side"], scooters: ["Scooter Model B", "Scooter Model C"] },
+        { name: "West Coast Garage", locations: ["West Coast", "Downtown"], scooters: ["Scooter Model A", "Scooter Model C"] }
+    ],
+    packages: [
+        { name: "Basic Package", duration: "1 Month", price: "$10", benefits: "Basic servicing and minor repairs. Best for light usage." },
+        { name: "Standard Package", duration: "3 Months", price: "$25", benefits: "Basic services plus priority booking. Perfect for regular riders." },
+        { name: "Premium Package", duration: "6 Months", price: "$50", benefits: "Free diagnostics and exclusive spare parts discounts." },
+        { name: "Platinum Package", duration: "12 Months", price: "$90", benefits: "Unlimited servicing, spare parts discounts, priority support." }
+    ]
+};
 
-        /* Common button styling */
-       button {
-    background: rgba(0, 51, 102, 0.6); /* Transparent dark blue */
-    color: #66ccff;
-    border: 1px solid rgba(102, 204, 255, 0.6);
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    backdrop-filter: blur(4px); /* Frosted glass effect */
-    transition: all 0.3s ease;
+function searchServiceCenters() {
+    const scooter = document.getElementById("scooterModel").value;
+    const location = document.getElementById("location").value;
+    const container = document.getElementById("cardContainer");
+    container.innerHTML = "";
+
+    if (!scooter || !location) {
+        alert("Please select both scooter model and location.");
+        return;
+    }
+
+    const filtered = data.serviceCenters.filter(sc => 
+        sc.scooters.includes(scooter) && sc.locations.includes(location)
+    );
+
+    if (filtered.length === 0) {
+        container.innerHTML = "<p>No service centers available for your selection.</p>";
+        return;
+    }
+
+    filtered.forEach(sc => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<h3>${sc.name}</h3>
+                          <p>Available in: ${sc.locations.join(", ")}</p>
+                          <button onclick="viewPackages('${sc.name}')">View Packages</button>`;
+        container.appendChild(card);
+    });
 }
 
-button:hover {
-    background: rgba(0, 102, 204, 0.8); /* Slightly brighter on hover */
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0px 0px 10px rgba(102, 204, 255, 0.8);
+function viewPackages(centerName) {
+    const table = document.getElementById("packagesTable");
+    const tbody = document.querySelector("#packagesTable tbody");
+    const note = document.getElementById("note");
+    const buttonsDiv = document.getElementById("tableButtons");
+    const cards = document.getElementById("cardContainer");
+
+    tbody.innerHTML = "";
+
+    data.packages.forEach(pkg => {
+        const row = `<tr>
+            <td>${pkg.name}</td>
+            <td>${pkg.duration}</td>
+            <td>${pkg.price}</td>
+            <td>${pkg.benefits}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+    });
+
+    cards.style.display = "none";
+    table.style.display = "table";
+    note.style.display = "block";
+    buttonsDiv.style.display = "block";
 }
 
-        table { 
-    width: 80%; 
-    margin: 20px auto; 
-    border-collapse: collapse; 
-    background: rgba(0, 31, 63, 0.7); /* Dark blue with 70% opacity */
-    box-shadow: 0px 0px 10px rgba(0, 51, 102, 0.6);
-    backdrop-filter: blur(5px); /* Optional: adds a frosted glass effect */
+function backToCenters() {
+    document.getElementById("packagesTable").style.display = "none";
+    document.getElementById("note").style.display = "none";
+    document.getElementById("tableButtons").style.display = "none";
+    document.getElementById("cardContainer").style.display = "flex";
 }
-th, td { 
-    padding: 15px; 
-    border: 1px solid rgba(0, 64, 128, 0.4); 
-    color: white;
-}
-th { 
-    background: rgba(0, 51, 102, 0.6); 
-    color: #66ccff; 
-}
-
-        
-
-    </style>
-    <script>
-        if (!sessionStorage.getItem("loggedInUser")) {
-            window.location.href = "login.html"; // Redirect to login if not logged in
-        }
-        
-        function redirectToPayment() {
-            window.location.href = "payment.html"; // Redirect to payment page
-        }
-
-        function goBackHome() {
-            window.location.href = "home.html"; // Redirect to home
-        }
-    </script>
+</script>
 </head>
 <body>
-    <nav>
-        <h1>Service Packages</h1>
-        <ul>
-        </ul>
-    </nav>
+<nav>
+    <h1>Service Packages</h1>
+</nav>
 
-    <h2>Choose Your Service Package</h2>
-    <table>
+<h2>Select Scooter & Location</h2>
+<select id="scooterModel">
+    <option value="">-- Select Scooter Model --</option>
+</select>
+
+<select id="location">
+    <option value="">-- Select Location --</option>
+</select>
+
+<button onclick="searchServiceCenters()">Click to Search Packages</button>
+
+<div id="cardContainer" class="card-container"></div>
+
+<table id="packagesTable">
+    <thead>
         <tr>
             <th>Package Name</th>
             <th>Duration</th>
             <th>Price</th>
             <th>Benefits</th>
         </tr>
-        <tr>
-            <td>Basic Package</td>
-            <td>1 Month</td>
-            <td>$10</td>
-            <td>Basic servicing and minor repairs. Best for light usage.</td>
-        </tr>
-        <tr>
-            <td>Standard Package</td>
-            <td>3 Months</td>
-            <td>$25</td>
-            <td>Basic services plus priority booking. Perfect for regular riders.</td>
-        </tr>
-        <tr>
-            <td>Premium Package</td>
-            <td>6 Months</td>
-            <td>$50</td>
-            <td>Free diagnostics and exclusive spare parts discounts.</td>
-        </tr>
-        <tr>
-            <td>Platinum Package</td>
-            <td>12 Months</td>
-            <td>$90</td>
-            <td>Unlimited servicing, spare parts discounts, priority support.</td>
-        </tr>
-    </table>
+    </thead>
+    <tbody></tbody>
+</table>
 
-    <!-- Action Buttons -->
-    <button onclick="redirectToPayment()">Get Package</button>
-    <button onclick="goBackHome()">Back to Home</button>
+<div id="note" class="note">
+    These packages are honored by all registered service centers partnered with us. 
+    Your chosen service center will confirm your booking after payment.
+</div>
+
+<div id="tableButtons" class="table-buttons">
+    <button class="buy-btn" onclick="window.location.href='payment.html'">Buy Package</button>
+    <button onclick="backToCenters()">Back</button>
+</div>
+
+<script>
+    // Populate dropdowns from data
+    const scooterSelect = document.getElementById("scooterModel");
+    data.scooters.forEach(s => {
+        scooterSelect.innerHTML += `<option value="${s}">${s}</option>`;
+    });
+    const locationSelect = document.getElementById("location");
+    data.locations.forEach(l => {
+        locationSelect.innerHTML += `<option value="${l}">${l}</option>`;
+    });
+</script>
 </body>
 </html>
