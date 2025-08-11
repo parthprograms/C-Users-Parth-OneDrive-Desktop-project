@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Scooter Service</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('HomePageImage.jpg'); /* Replace with your image filename */
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        nav {
+            background: rgba(125, 96, 194, 0.2);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #ffffff33;
+        }
+
+        nav h1 {
+            margin: 0 0 15px;
+            font-size: 54px;
+            font-weight: bold;
+            font-style: italic;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #ffffff, #cce0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin: 8px 12px;
+        }
+
+        nav ul li a,
+        nav ul li button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 22px;
+            border: 3px solid #ffffff;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        nav ul li a:hover,
+        nav ul li button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 14px rgba(255, 255, 255, 0.3);
+        }
+
+        section {
+            padding: 30px;
+            margin: 40px auto;
+            width: 80%;
+            max-width: 900px;
+            background: rgba(248, 244, 244, 0.4);
+            color: #f9f7f7;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+    </style>
+
+    <script>
+        if (!sessionStorage.getItem("loggedInUser")) {
+            window.location.href = "login.html"; // Redirect if not logged in
+        }
+
+        function logout() {
+            sessionStorage.removeItem("loggedInUser");
+            window.location.href = "login.html"; // Logout and go to login
+        }
+    </script>
+</head>
+<body>
+
+    <nav>
+        <h1>eDriveCare</h1>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="schedule.html">Schedule Service</a></li>
+            <li><a href="history.html">Service History</a></li>
+            <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            <li><a href="store.html">Spare Parts Store</a></li>
+            <li><a href="subscription.html">Subscription</a></li><br><br>
+            <li><a href="dashboard.html">User Dashboard</a></li>
+            <li><button onclick="logout()">Logout</button></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <h2>Welcome to Our Electric Scooter Service</h2>
+        <p>
+            We are committed to providing top-notch servicing and maintenance for your electric scooters. From routine checkups to troubleshooting common issues, our expert team ensures your ride remains smooth and efficient.
+        </p>
+        <p>
+            Explore our spare parts store, schedule services online, and manage your subscriptions with ease. Join our community for support and stay updated with the latest offers and notifications. Your scooter’s best care starts here! 🔧🔋
+        </p>
+    </section>
+
+</body>
+</html>

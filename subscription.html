@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Packages</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #0b0b0b; 
+            color: white; 
+            text-align: center; 
+            margin: 0;
+            background-image: url('new6.jpg');
+
+        }
+        nav { 
+            background: #001f3f; 
+            color: #fff; 
+            padding: 15px; 
+            text-align: center; 
+        }
+        nav ul { list-style: none; padding: 0; margin: 0; }
+        nav ul li { display: inline; margin: 0 15px; }
+        nav ul li a { 
+            color: #fff; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: color 0.3s; 
+        }
+        nav ul li a:hover { color: #66ccff; }
+        
+        h1 {
+    color: #66ccff;
+    background-color: rgba(0, 0, 0, 0.3); /* Transparent black overlay */
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+        table { 
+            width: 80%; 
+            margin: 20px auto; 
+            border-collapse: collapse; 
+            background: #001f3f; 
+            box-shadow: 0px 0px 10px #003366;
+        }
+        th, td { 
+            padding: 15px; 
+            border: 1px solid #004080; 
+            color: white;
+        }
+        th { background: #003366; color: #66ccff; }
+
+        /* Common button styling */
+       button {
+    background: rgba(0, 51, 102, 0.6); /* Transparent dark blue */
+    color: #66ccff;
+    border: 1px solid rgba(102, 204, 255, 0.6);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    backdrop-filter: blur(4px); /* Frosted glass effect */
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: rgba(0, 102, 204, 0.8); /* Slightly brighter on hover */
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgba(102, 204, 255, 0.8);
+}
+
+        table { 
+    width: 80%; 
+    margin: 20px auto; 
+    border-collapse: collapse; 
+    background: rgba(0, 31, 63, 0.7); /* Dark blue with 70% opacity */
+    box-shadow: 0px 0px 10px rgba(0, 51, 102, 0.6);
+    backdrop-filter: blur(5px); /* Optional: adds a frosted glass effect */
+}
+th, td { 
+    padding: 15px; 
+    border: 1px solid rgba(0, 64, 128, 0.4); 
+    color: white;
+}
+th { 
+    background: rgba(0, 51, 102, 0.6); 
+    color: #66ccff; 
+}
+
+        
+
+    </style>
+    <script>
+        if (!sessionStorage.getItem("loggedInUser")) {
+            window.location.href = "login.html"; // Redirect to login if not logged in
+        }
+        
+        function redirectToPayment() {
+            window.location.href = "payment.html"; // Redirect to payment page
+        }
+
+        function goBackHome() {
+            window.location.href = "home.html"; // Redirect to home
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <h1>Service Packages</h1>
+        <ul>
+        </ul>
+    </nav>
+
+    <h2>Choose Your Service Package</h2>
+    <table>
+        <tr>
+            <th>Package Name</th>
+            <th>Duration</th>
+            <th>Price</th>
+            <th>Benefits</th>
+        </tr>
+        <tr>
+            <td>Basic Package</td>
+            <td>1 Month</td>
+            <td>$10</td>
+            <td>Basic servicing and minor repairs. Best for light usage.</td>
+        </tr>
+        <tr>
+            <td>Standard Package</td>
+            <td>3 Months</td>
+            <td>$25</td>
+            <td>Basic services plus priority booking. Perfect for regular riders.</td>
+        </tr>
+        <tr>
+            <td>Premium Package</td>
+            <td>6 Months</td>
+            <td>$50</td>
+            <td>Free diagnostics and exclusive spare parts discounts.</td>
+        </tr>
+        <tr>
+            <td>Platinum Package</td>
+            <td>12 Months</td>
+            <td>$90</td>
+            <td>Unlimited servicing, spare parts discounts, priority support.</td>
+        </tr>
+    </table>
+
+    <!-- Action Buttons -->
+    <button onclick="redirectToPayment()">Get Package</button>
+    <button onclick="goBackHome()">Back to Home</button>
+</body>
+</html>

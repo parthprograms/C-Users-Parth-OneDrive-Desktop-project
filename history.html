@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service History</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #000; }
+        section { padding: 20px; background: #fff; margin: 20px; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #000; padding: 10px; text-align: left; }
+        th { background: #003366; color: #fff; }
+    </style>
+    <script>
+        if (!sessionStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html"; 
+        }
+    </script>
+</head>
+<body>
+    <section>
+        <h2>Service History</h2>
+        <table>
+            <tr>
+                <th>Service ID</th>
+                <th>Date</th>
+                <th>Scooter Model</th>
+                <th>Service Type</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>001</td>
+                <td>2024-02-01</td>
+                <td>Xiaomi M365</td>
+                <td>Battery Check</td>
+                <td>Completed</td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>2024-02-05</td>
+                <td>Segway Ninebot</td>
+                <td>Motor Repair</td>
+                <td>Pending</td>
+            </tr>
+           <tr>
+                <td>003</td>
+                <td>2024-02-05</td>
+                <td>Segway Ninebot</td>
+                <td>System Check</td>
+                <td>Completed</td>
+            </tr>
+           <tr>
+                <td>004</td>
+                <td>2025-02-27</td>
+                <td>Segway Ninebot</td>
+                <td> Battery Change</td>
+                <td>Pending</td>
+            </tr>
+
+
+        </table>
+    </section>
+</body>
+</html>

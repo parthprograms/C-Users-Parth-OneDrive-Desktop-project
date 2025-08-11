@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Schedule Service</title>
+  <style>
+    body {
+      background-image: url('new6.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      background-color: #050506;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: rgba(3, 4, 5, 0.4);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    header h1 {
+      font-size: 48px;
+      font-weight: bold;
+      font-style: italic;
+      letter-spacing: 2px;
+      background: linear-gradient(to right, #ffffff, #cce0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+      background-color: rgba(255, 255, 255, 0.1);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+
+    .form-section {
+      background: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      border-radius: 5px;
+      border: 1px solid #000;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #003366;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0055aa;
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 85, 170, 0.4);
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid #fff;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+       background-color: #e9e9ea;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+    }
+
+    .service-centers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .center-card {
+      background: #fff;
+      width: 80%;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .center-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .booking-form {
+      background: #fff;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .booking-form h2 {
+      text-align: center;
+      color: #003366;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      color: white;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+
+  <script>
+    // Show loader and then remove it after 1 second
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+      }, 1000);
+    });
+
+    const centers = {
+  "Pune": [
+    {
+      name: "EV Service Hub Pune",
+      address: "123 Baner Road, Pune",
+      time: "9:00 AM - 6:00 PM",
+      image: "center_pune.jpg"
+    }
+  ],
+  "Mumbai": [
+    {
+      name: "Mumbai EV Garage",
+      address: "456 Andheri West, Mumbai",
+      time: "10:00 AM - 7:00 PM",
+      image: "center_mumbai.jpg"
+    }
+  ],
+  "Kolhapur": [
+    {
+      name: "Kolhapur EV Point",
+      address: "789 Rankala Road, Kolhapur",
+      time: "9:30 AM - 5:30 PM",
+      image: "center_kolhapur.jpg"
+    }
+  ],
+  "Nashik": [],
+  "Nagpur": [],
+  "Satara": [],
+  "Solapur": []
+};
+
+
+    function showCenters() {
+      const district = document.getElementById("district").value;
+      const model = document.getElementById("scooterModel").value;
+      const container = document.getElementById("centerCards");
+      container.innerHTML = "";
+
+      if (district && model) {
+        const districtCenters = centers[district] || [];
+        if (districtCenters.length === 0) {
+          container.innerHTML = `<p style="color: white;">No service centers found in ${district}.</p>`;
+        } else {
+          districtCenters.forEach(center => {
+            const card = document.createElement("div");
+            card.className = "center-card";
+            card.innerHTML = `
+              <img src="${center.image}" alt="${center.name}">
+              <h3>${center.name}</h3>
+              <p><strong>Address:</strong> ${center.address}</p>
+              <p><strong>Timings:</strong> ${center.time}</p>
+              <button onclick="openBookingForm('${center.name}')">Request Booking</button>
+            `;
+            container.appendChild(card);
+          });
+          document.getElementById("centers").classList.remove("hidden");
+        }
+      }
+    }
+
+    function openBookingForm(centerName) {
+      document.getElementById("bookingForm").classList.remove("hidden");
+      document.getElementById("selectedCenter").value = centerName;
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById("date").setAttribute("min", today);
+    }
+
+    function sendRequest() {
+      const name = document.getElementById("userName").value;
+      const phone = document.getElementById("userPhone").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("timeSlot").value;
+      const center = document.getElementById("selectedCenter").value;
+
+      if (name && phone && date && time) {
+        alert(`Request sent to ${center}!\nName: ${name}\nPhone: ${phone}\nDate: ${date}\nTime: ${time}`);
+        document.getElementById("bookingForm").reset();
+        document.getElementById("bookingForm").classList.add("hidden");
+      } else {
+        alert("Please fill all fields.");
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loader">Loading...</div>
+
+  <a class="back-button" href="home.html">← Back to Home</a>
+
+  <header>
+    <h1>Schedule Your EV Service</h1>
+  </header>
+
+  <section class="form-section">
+    <label for="district">Select Your District (Maharashtra):</label>
+    <select id="district">
+      <option value="">-- Select District --</option>
+      <option value="Pune">Pune</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Kolhapur">Kolhapur</option>
+      <option value="Nashik">Nashik</option>
+      <option value="Nagpur">Nagpur</option>
+      <option value="Satara">Satara</option>
+      <option value="Solapur">Solapur</option>
+    </select>
+
+    <label for="scooterModel">Select Your EV Model:</label>
+    <select id="scooterModel">
+      <option value="">-- Select Scooter/Bike Model --</option>
+      <option value="Ola S1 Pro">Ola S1 Pro</option>
+      <option value="Ather 450X">Ather 450X</option>
+      <option value="Chetak">Chetak</option>
+      <option value="TVS iQube">TVS iQube</option>
+    </select>
+
+    <button onclick="showCenters()">Search Service Centers</button>
+  </section>
+
+  <section id="centers" class="service-centers hidden">
+    <div id="centerCards"></div>
+  </section>
+
+  <form id="bookingForm" class="booking-form hidden">
+    <h2>Request Your Service</h2>
+    <input type="hidden" id="selectedCenter" />
+    <label>Name:</label>
+    <input type="text" id="userName" placeholder="Your Full Name" required />
+    
+    <label>Phone Number:</label>
+    <input type="tel" id="userPhone" placeholder="10-digit Phone Number" pattern="[0-9]{10}" required />
+
+    <label>Select Date:</label>
+    <input type="date" id="date" required />
+
+    <label>Select Time:</label>
+    <input type="time" id="timeSlot" required />
+
+    <button type="button" onclick="sendRequest()">Send Request to the Service Centre</button>
+  </form>
+</body>
+</html>

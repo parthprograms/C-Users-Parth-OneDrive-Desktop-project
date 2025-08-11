@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Login</title>
+  <style>
+    body {
+      background-image: url('eDriveCare.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+
+    .container {
+      width: 320px;
+      margin: 160px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: #003366;
+    }
+
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #003366;
+      border-radius: 4px;
+    }
+
+    button {
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #cc0000;
+    }
+
+    .toggle-link {
+      margin-top: 10px;
+      color: #003366;
+      cursor: pointer;
+      display: block;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .password-toggle {
+      text-align: right;
+      font-size: 12px;
+      cursor: pointer;
+      margin-right: 20px;
+      color: #003366;
+    }
+  </style>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+
+      // Admin login stays hardcoded
+      if (role === 'admin' && username === 'admin' && password === 'admin123') {
+        sessionStorage.setItem("loggedInAdmin", username);
+        window.location.href = 'admin.html';
+        return;
+      }
+
+      // Fetch user credentials from localStorage
+      const storedUser = localStorage.getItem("signupUser");
+      const storedPass = localStorage.getItem("signupPass");
+
+      if (role === 'user' && username === storedUser && password === storedPass) {
+        sessionStorage.setItem("loggedInUser", username);
+        window.location.href = 'home.html';
+      } else {
+        alert('Invalid credentials!');
+      }
+    }
+
+    function toggleSignUp() {
+      document.getElementById('loginForm').classList.add('hide');
+      document.getElementById('signUpForm').classList.remove('hide');
+    }
+
+    function toggleLogin(message = '') {
+      document.getElementById('signUpForm').classList.add('hide');
+      document.getElementById('loginForm').classList.remove('hide');
+
+      if (message) {
+        document.getElementById('loginHeading').innerText = message;
+      } else {
+        document.getElementById('loginHeading').innerText = "Login";
+      }
+    }
+
+    function togglePasswordVisibility(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function signUp() {
+      const signupInput = document.getElementById('signupInput').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (signupInput === "" || password === "") {
+        alert("Fields cannot be empty!");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      // Save credentials in localStorage
+      localStorage.setItem("signupUser", signupInput);
+      localStorage.setItem("signupPass", password);
+
+      alert("Sign up successful! Now login with your new credentials.");
+      toggleLogin("Now login using your new credentials");
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Login Form -->
+    <div id="loginForm">
+      <h2 id="loginHeading">Login</h2>
+      <select id="role">
+        <option value="user">User Login</option>
+        <option value="admin">Admin Login</option>
+      </select><br>
+      <input type="text" id="username" placeholder="Username"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button onclick="login()">Login</button>
+      <span class="toggle-link" onclick="toggleSignUp()">New here? Sign up</span>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="signUpForm" class="hide">
+      <h2>Sign Up</h2>
+      <input type="text" id="signupInput" placeholder="Email or Phone"><br>
+      <input type="password" id="signupPassword" placeholder="Password">
+      <div class="password-toggle" onclick="togglePasswordVisibility('signupPassword')">Show/Hide</div>
+
+      <input type="password" id="confirmPassword" placeholder="Confirm Password">
+      <div class="password-toggle" onclick="togglePasswordVisibility('confirmPassword')">Show/Hide</div>
+
+      <button onclick="signUp()">Create Account</button>
+      <span class="toggle-link" onclick="toggleLogin()">Back to Login</span>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #ffcccb; color: #000; }
+        section { padding: 20px; background: #fff; margin: 20px; border-radius: 10px; text-align: center; }
+        input, select { width: 80%; padding: 10px; margin: 10px; border-radius: 5px; border: 1px solid #000; }
+        .pay-btn { background: #ff5733; color: white; padding: 10px; border: none; cursor: pointer; }
+        .pay-btn:hover { background: #d84315; }
+    </style>
+    <script>
+        if (!sessionStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html"; 
+        }
+
+        function completePurchase() {
+            alert("Order placed successfully!");
+            localStorage.removeItem("cart");
+            window.location.href = "home.html";
+        }
+    </script>
+</head>
+<body>
+    <section>
+        <h2>Delivery & Payment</h2>
+        <input type="text" placeholder="Full Name" required>
+        <input type="text" placeholder="Address" required>
+        <input type="text" placeholder="City" required>
+        <input type="text" placeholder="ZIP Code" required>
+        
+        <h3>Payment Method</h3>
+        <select>
+            <option>Credit Card</option>
+            <option>PayPal</option>
+            <option>Cash on Delivery</option>
+        </select>
+        
+        <button class="pay-btn" onclick="completePurchase()">Place Order</button>
+    </section>
+</body>
+</html>

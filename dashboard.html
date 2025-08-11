@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f4f8; color: #333; }
+        .dashboard { max-width: 600px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h2 { color: #003366; }
+        .notification { background: #e0e7ef; padding: 10px; margin: 10px 0; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .mark-read { background: #003366; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .mark-read:hover { background: #002244; }
+    </style>
+    <script>
+        if (!sessionStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html"; 
+        }
+
+        function markAsRead(element) {
+            element.parentElement.remove();
+        }
+    </script>
+</head>
+<body>
+    <div class="dashboard">
+        <h2>Welcome to Your Dashboard</h2>
+        <div id="notifications">
+            <div class="notification">1. You have 2 new notifications. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
+            <div class="notification">2. Next scheduling is on 15 Feb. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
+            <div class="notification">3. Motor servicing is still pending. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
+            <div class="notification">4. Your warranty expires in 30 days. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
+            <div class="notification">5. A new software update is available for your scooter. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
+        </div>
+    </div>
+</body>
+</html>

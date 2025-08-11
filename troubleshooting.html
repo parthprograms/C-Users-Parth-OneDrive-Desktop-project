@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black; /* helps you see if background fails */
+            background-image: url('new5.jpg');
+
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #f0f0f0;
+        }
+
+        section {
+            padding: 40px;
+            background: rgba(20, 20, 20, 0.95);
+            margin: 60px auto;
+            border-radius: 15px;
+            width: 85%;
+            max-width: 1000px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        }
+
+        h2 {
+            font-family: sans-serif;
+            text-align: center;
+            font-size: 32px;
+            color: #66ccff;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ddd;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: none;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            color: #f0f0f0;
+        }
+
+        th {
+            background: #003366;
+            color: #fff;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #125569;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-style: solid;
+            border-color: whitesmoke;
+        }
+
+        .back-button:hover {
+            background-color: #e9e9ea;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+        }
+    </style>
+
+    <script>
+        if (!sessionStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html"; 
+        }
+
+        function showTable() {
+            var selectedModel = document.getElementById("scooterModel").value;
+            var tables = document.querySelectorAll("table");
+
+            tables.forEach(function(table) {
+                table.style.display = "none";
+            });
+
+            if (selectedModel) {
+                document.getElementById(selectedModel).style.display = "table";
+            }
+        }
+    </script>
+</head>
+<body>
+    <section>
+        <a href="home.html" class="back-button">← Back to Home</a>
+
+        <h2>Troubleshooting Guide</h2>
+
+        <label for="scooterModel"><strong>Select Scooter Model:</strong></label>
+        <select id="scooterModel" onchange="showTable()">
+            <option value="">-- Choose Model --</option>
+            <option value="modelA">eScoot Alpha</option>
+            <option value="modelB">VoltRider X</option>
+            <option value="modelC">ZappGo Lite</option>
+        </select>
+
+        <!-- Table for eScoot Alpha -->
+        <table id="modelA">
+            <tr><th>Problem</th><th>Solution</th></tr>
+            <tr><td>Battery not charging</td><td>Check charger, power source, and battery health.</td></tr>
+            <tr><td>Throttle unresponsive</td><td>Check throttle wiring and replace if faulty.</td></tr>
+            <tr><td>Strange noise from wheels</td><td>Inspect bearings and brake alignment.</td></tr>
+        </table>
+
+        <!-- Table for VoltRider X -->
+        <table id="modelB">
+            <tr><th>Problem</th><th>Solution</th></tr>
+            <tr><td>Scooter shuts down randomly</td><td>Check battery connectors and controller unit.</td></tr>
+            <tr><td>LED display flickers</td><td>Inspect fuse and secure wiring connections.</td></tr>
+            <tr><td>Loose handlebar</td><td>Tighten handlebar stem screws.</td></tr>
+        </table>
+
+        <!-- Table for ZappGo Lite -->
+        <table id="modelC">
+            <tr><th>Problem</th><th>Solution</th></tr>
+            <tr><td>Scooter vibrates on uneven roads</td><td>Check shock absorbers and tire pressure.</td></tr>
+            <tr><td>Low range per charge</td><td>Ensure full charge and avoid high-speed usage frequently.</td></tr>
+            <tr><td>Brake squealing</td><td>Clean brake pads or replace if worn out.</td></tr>
+        </table>
+    </section>
+</body>
+</html>
