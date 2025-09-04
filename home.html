@@ -9,7 +9,7 @@
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('HomePageImage.jpg'); /* Replace with your image filename */
+            background-image: url('HomePageImage.jpg'); /* Electric scooter background */
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -80,6 +80,89 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
         }
+
+        /* New styles for additional sections */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #cce0ff;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #cce0ff;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 30px;
+            border: 3px solid #ffffff;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-top: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #cce0ff;
+        }
     </style>
 
     <script>
@@ -96,28 +179,78 @@
 <body>
 
     <nav>
-        <h1>eDriveCare</h1>
+        <h1>eRideCare</h1>
         <ul>
-            <li><a href="home.html">Home</a></li>
             <li><a href="schedule.html">Schedule Service</a></li>
             <li><a href="history.html">Service History</a></li>
             <li><a href="troubleshooting.html">Troubleshooting</a></li>
-            <li><a href="store.html">Spare Parts Store</a></li>
-            <li><a href="subscription.html">Subscription</a></li><br><br>
             <li><a href="dashboard.html">User Dashboard</a></li>
             <li><button onclick="logout()">Logout</button></li>
         </ul>
     </nav>
 
     <section id="home">
-        <h2>Welcome to Our Electric Scooter Service</h2>
+        <h2>Welcome to eRideCare Electric Scooter Service</h2>
         <p>
             We are committed to providing top-notch servicing and maintenance for your electric scooters. From routine checkups to troubleshooting common issues, our expert team ensures your ride remains smooth and efficient.
         </p>
         <p>
-            Explore our spare parts store, schedule services online, and manage your subscriptions with ease. Join our community for support and stay updated with the latest offers and notifications. Your scooter’s best care starts here! 🔧🔋
+            Explore our spare parts store, schedule services online, and manage your subscriptions with ease. Join our community for support and stay updated with the latest offers and notifications. Your scooter's best care starts here! 🔧🔋
         </p>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="schedule.html" class="cta-button">Schedule Service Now</a>
+        </div>
     </section>
+
+    <section id="services">
+        <h2>Our Premium Services</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Regular Maintenance</h3>
+                <p>Keep your scooter in perfect condition with our comprehensive maintenance packages.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔋</div>
+                <h3>Battery Services</h3>
+                <p>Battery health check, replacement, and optimization for longer ride times.</p>
+            </div>
+           
+            <div class="feature-card">
+                <div class="feature-icon">🛠️</div>
+                <h3>Parts Replacement</h3>
+                <p>Genuine parts with warranty for all major electric scooter brands.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial">
+            <p>"eRideCare transformed my scooter's performance! The battery service added 40% more range to my rides."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">RK</div>
+                <div>Rahul Kumar, Pune</div>
+            </div>
+        </div>
+        <div class="testimonial">
+            <p>"Quick service and professional staff. My scooter was serviced within 2 hours while I waited!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">PM</div>
+                <div>Priya Mishra, Mumbai</div>
+            </div>
+        </div>
+        <div class="testimonial">
+            <p>"The subscription plan saved me money on maintenance. Highly recommend their annual service package."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">AS</div>
+                <div>Arjun Singh, Delhi</div>
+            </div>
+        </div>
+    </section>
+
+    
 
 </body>
 </html>
