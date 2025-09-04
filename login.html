@@ -3,76 +3,327 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>User Login</title>
+  <title>User Login - eDriveCare</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      background-image: url('eDriveCare.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      font-family: Arial, sans-serif;
-      text-align: center;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-image: url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
     }
 
     .container {
-      width: 320px;
-      margin: 160px auto;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-
-    h2 {
-      color: #003366;
-    }
-
-    input, select {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #003366;
-      border-radius: 4px;
-    }
-
-    button {
-      background: #ff0000;
-      color: #fff;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
       width: 100%;
-      border-radius: 4px;
+      max-width: 420px;
+      margin: 20px auto;
     }
 
-    button:hover {
-      background: #cc0000;
+    .login-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .logo p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #00c9ff;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #00c9ff;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(0, 201, 255, 0.3);
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .toggle-password:hover {
+      color: #00c9ff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #00c9ff, #00ff95);
+      color: #0f2027;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 5px 15px rgba(0, 201, 255, 0.4);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 201, 255, 0.6);
     }
 
     .toggle-link {
-      margin-top: 10px;
-      color: #003366;
+      text-align: center;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
-      display: block;
+      transition: color 0.3s ease;
     }
 
-    .hide {
+    .toggle-link:hover {
+      color: #00c9ff;
+    }
+
+    .form-switch {
+      overflow: hidden;
+      max-height: 500px;
+      transition: max-height 0.5s ease;
+    }
+
+    .form-hidden {
+      max-height: 0;
+      overflow: hidden;
+    }
+
+    .alert {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
       display: none;
+      text-align: center;
     }
 
-    .password-toggle {
-      text-align: right;
-      font-size: 12px;
-      cursor: pointer;
-      margin-right: 20px;
-      color: #003366;
+    .alert-error {
+      background: rgba(255, 107, 107, 0.2);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    .alert-success {
+      background: rgba(0, 204, 102, 0.2);
+      color: #00ff95;
+      border: 1px solid rgba(0, 204, 102, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+      
+      .login-card {
+        padding: 20px;
+      }
+      
+      .logo h1 {
+        font-size: 2rem;
+      }
     }
   </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="login-card fade-in">
+      <div class="logo">
+        <h1>eDriveCare</h1>
+        <p>Your EV Service Companion</p>
+      </div>
+
+      <div id="alertBox" class="alert"></div>
+
+      <!-- Login Form -->
+      <div id="loginForm" class="form-switch">
+        <div class="form-group">
+          <label for="role">Login As</label>
+          <select id="role" class="form-control">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-control" placeholder="Enter your username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container">
+            <input type="password" id="password" class="form-control" placeholder="Enter your password">
+            <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+        </div>
+
+        <button class="btn" onclick="login()">Login</button>
+
+        <div class="toggle-link" onclick="toggleSignUp()">
+          New here? Create an account
+        </div>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div id="signUpForm" class="form-switch form-hidden">
+        <div class="form-group">
+          <label for="signupInput">Email or Phone</label>
+          <input type="text" id="signupInput" class="form-control" placeholder="Enter your email or phone">
+        </div>
+
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <div class="password-container">
+            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password">
+            <span class="toggle-password" onclick="togglePasswordVisibility('signupPassword')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="password-container">
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password">
+            <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+        </div>
+
+        <button class="btn" onclick="signUp()">Create Account</button>
+
+        <div class="toggle-link" onclick="toggleLogin()">
+          Already have an account? Sign in
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
+    // Show alert message
+    function showAlert(message, type) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.textContent = message;
+      alertBox.className = `alert alert-${type}`;
+      alertBox.style.display = 'block';
+      
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+      }, 5000);
+    }
+
+    // Toggle password visibility
+    function togglePasswordVisibility(id) {
+      const input = document.getElementById(id);
+      const icon = input.nextElementSibling.querySelector('i');
+      
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = "password";
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    // Toggle between login and signup forms
+    function toggleSignUp() {
+      document.getElementById('loginForm').classList.add('form-hidden');
+      document.getElementById('signUpForm').classList.remove('form-hidden');
+    }
+
+    function toggleLogin() {
+      document.getElementById('signUpForm').classList.add('form-hidden');
+      document.getElementById('loginForm').classList.remove('form-hidden');
+    }
+
+    // Login function
     function login() {
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
@@ -93,43 +344,23 @@
         sessionStorage.setItem("loggedInUser", username);
         window.location.href = 'home.html';
       } else {
-        alert('Invalid credentials!');
+        showAlert('Invalid credentials! Please try again.', 'error');
       }
     }
 
-    function toggleSignUp() {
-      document.getElementById('loginForm').classList.add('hide');
-      document.getElementById('signUpForm').classList.remove('hide');
-    }
-
-    function toggleLogin(message = '') {
-      document.getElementById('signUpForm').classList.add('hide');
-      document.getElementById('loginForm').classList.remove('hide');
-
-      if (message) {
-        document.getElementById('loginHeading').innerText = message;
-      } else {
-        document.getElementById('loginHeading').innerText = "Login";
-      }
-    }
-
-    function togglePasswordVisibility(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === "password" ? "text" : "password";
-    }
-
+    // Sign up function
     function signUp() {
       const signupInput = document.getElementById('signupInput').value.trim();
       const password = document.getElementById('signupPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
 
       if (signupInput === "" || password === "") {
-        alert("Fields cannot be empty!");
+        showAlert("Fields cannot be empty!", 'error');
         return;
       }
 
       if (password !== confirmPassword) {
-        alert("Passwords do not match!");
+        showAlert("Passwords do not match!", 'error');
         return;
       }
 
@@ -137,42 +368,29 @@
       localStorage.setItem("signupUser", signupInput);
       localStorage.setItem("signupPass", password);
 
-      alert("Sign up successful! Now login with your new credentials.");
-      toggleLogin("Now login using your new credentials");
+      showAlert("Sign up successful! Now login with your new credentials.", 'success');
+      
+      // Clear form
+      document.getElementById('signupInput').value = '';
+      document.getElementById('signupPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+      
+      // Switch to login form after a delay
+      setTimeout(() => {
+        toggleLogin();
+      }, 2000);
     }
+
+    // Add Enter key support
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        if (!document.getElementById('signUpForm').classList.contains('form-hidden')) {
+          signUp();
+        } else {
+          login();
+        }
+      }
+    });
   </script>
-</head>
-
-<body>
-  <div class="container">
-
-    <!-- Login Form -->
-    <div id="loginForm">
-      <h2 id="loginHeading">Login</h2>
-      <select id="role">
-        <option value="user">User Login</option>
-        <option value="admin">Admin Login</option>
-      </select><br>
-      <input type="text" id="username" placeholder="Username"><br>
-      <input type="password" id="password" placeholder="Password"><br>
-      <button onclick="login()">Login</button>
-      <span class="toggle-link" onclick="toggleSignUp()">New here? Sign up</span>
-    </div>
-
-    <!-- Sign Up Form -->
-    <div id="signUpForm" class="hide">
-      <h2>Sign Up</h2>
-      <input type="text" id="signupInput" placeholder="Email or Phone"><br>
-      <input type="password" id="signupPassword" placeholder="Password">
-      <div class="password-toggle" onclick="togglePasswordVisibility('signupPassword')">Show/Hide</div>
-
-      <input type="password" id="confirmPassword" placeholder="Confirm Password">
-      <div class="password-toggle" onclick="togglePasswordVisibility('confirmPassword')">Show/Hide</div>
-
-      <button onclick="signUp()">Create Account</button>
-      <span class="toggle-link" onclick="toggleLogin()">Back to Login</span>
-    </div>
-
-  </div>
 </body>
 </html>
