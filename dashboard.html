@@ -1,37 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f4f8; color: #333; }
-        .dashboard { max-width: 600px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        h2 { color: #003366; }
-        .notification { background: #e0e7ef; padding: 10px; margin: 10px 0; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .mark-read { background: #003366; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
-        .mark-read:hover { background: #002244; }
-    </style>
-    <script>
-        if (!sessionStorage.getItem("loggedInUser")) {
-            window.location.href = "index.html"; 
-        }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        function markAsRead(element) {
-            element.parentElement.remove();
-        }
-    </script>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+      background-image: url('https://images.unsplash.com/photo-1643330683233-ff2ac89b002c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1972&q=80');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 0;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .dashboard-title {
+      font-size: 2rem;
+      color: #00c9ff;
+      font-weight: 600;
+    }
+
+    .user-welcome {
+      font-size: 1.2rem;
+      color: #92fe9d;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c9ff, #00ff95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .dashboard-sections {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+
+    @media (min-width: 900px) {
+      .dashboard-sections {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .dashboard-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: #00c9ff;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      font-size: 1.2rem;
+    }
+
+    .notification-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .notification-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .notification-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .notification-message {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .notification-meta {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .notification-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00c9ff, #00ff95);
+      color: #0f2027;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 201, 255, 0.4);
+    }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.2);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: rgba(255, 107, 107, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+    }
+
+    .empty-state i {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00c9ff;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script>
+    // Redirect if not logged in
+    if (!sessionStorage.getItem("loggedInUser")) {
+      window.location.href = "index.html";
+    }
+
+    // --- Storage Keys ---
+    const UNREAD_KEY = "notifications_unread";
+    const READ_KEY   = "notifications_read";
+
+    // --- State Load/Save ---
+    const load = (key) => {
+      try { return JSON.parse(localStorage.getItem(key) || "[]"); }
+      catch { return []; }
+    };
+    const save = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+
+    // --- Renderers ---
+    function renderLists() {
+      const unread = load(UNREAD_KEY);
+      const read = load(READ_KEY);
+
+      const unreadBox = document.getElementById("unreadList");
+      const readBox = document.getElementById("readList");
+
+      // Unread
+      if (unread.length === 0) {
+        unreadBox.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-bell-slash"></i>
+            <p>No new notifications yet.</p>
+          </div>
+        `;
+      } else {
+        unreadBox.innerHTML = unread.map(n => cardHTML(n, false)).join("");
+      }
+
+      // Read
+      if (read.length === 0) {
+        readBox.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-check-circle"></i>
+            <p>No read notifications yet.</p>
+          </div>
+        `;
+      } else {
+        readBox.innerHTML = read.map(n => cardHTML(n, true)).join("");
+      }
+    }
+
+    function cardHTML(n, isRead) {
+      const time = new Date(n.timestamp).toLocaleString();
+      return `
+        <div class="notification-card" data-id="${n.id}">
+          <div class="notification-message">${escapeHTML(n.message)}</div>
+          <div class="notification-meta">
+            <span>From: ${escapeHTML(n.from || "Admin")}</span>
+            <span>${time}</span>
+          </div>
+          <div class="notification-actions">
+            ${isRead
+              ? `<button class="btn btn-danger" onclick="deleteRead('${n.id}')"><i class="fas fa-trash"></i> Delete</button>`
+              : `<button class="btn btn-primary" onclick="markAsRead('${n.id}')"><i class="fas fa-check"></i> Mark as Read</button>`
+            }
+          </div>
+        </div>
+      `;
+    }
+
+    // --- Actions ---
+    function markAsRead(id) {
+      const unread = load(UNREAD_KEY);
+      const read = load(READ_KEY);
+      const idx = unread.findIndex(n => n.id === id);
+      if (idx === -1) return;
+
+      const [note] = unread.splice(idx, 1);
+      note.readAt = Date.now();
+      read.unshift(note);                 // add to top
+      save(UNREAD_KEY, unread);
+      save(READ_KEY, read);
+      renderLists();
+    }
+
+    function deleteRead(id) {
+      const read = load(READ_KEY).filter(n => n.id !== id);
+      save(READ_KEY, read);
+      renderLists();
+    }
+
+    // --- Utility: simple escaping for safety ---
+    function escapeHTML(str="") {
+      return str.replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    // --- Hook for admin/backend integration ---
+    window.addEventListener("storage", (e) => {
+      if (e.key === "admin_push" && e.newValue) {
+        try {
+          const payload = JSON.parse(e.newValue);
+          // Normalize + store as unread
+          const unread = load(UNREAD_KEY);
+          unread.unshift({
+            id: payload.id || crypto.randomUUID(),
+            message: payload.message || "",
+            from: payload.from || "Admin",
+            timestamp: payload.timestamp || Date.now()
+          });
+          save(UNREAD_KEY, unread);
+          renderLists();
+        } catch {}
+        // Clear the push key so next push is detected
+        localStorage.removeItem("admin_push");
+      }
+    });
+
+    // Init
+    document.addEventListener("DOMContentLoaded", () => {
+      // Page welcome message
+      const user = sessionStorage.getItem("loggedInUser");
+      document.getElementById("welcomeName").textContent = user || "User";
+      document.getElementById("avatarInitial").textContent = user ? user.charAt(0).toUpperCase() : "U";
+
+      // Render notifications
+      renderLists();
+    });
+
+    // (Optional) Developer helper to simulate an admin push in this tab:
+    window.simulateAdmin = (msg, from="Admin") => {
+      const unread = load(UNREAD_KEY);
+      unread.unshift({ id: crypto.randomUUID(), message: msg, from, timestamp: Date.now() });
+      save(UNREAD_KEY, unread);
+      renderLists();
+    };
+  </script>
 </head>
 <body>
-    <div class="dashboard">
-        <h2>Welcome to Your Dashboard</h2>
-        <div id="notifications">
-            <div class="notification">1. You have 2 new notifications. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
-            <div class="notification">2. Next scheduling is on 15 Feb. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
-            <div class="notification">3. Motor servicing is still pending. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
-            <div class="notification">4. Your warranty expires in 30 days. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
-            <div class="notification">5. A new software update is available for your scooter. <button class="mark-read" onclick="markAsRead(this)">Mark as Read</button></div>
+  <div class="container">
+    <a class="back-button" href="home.html">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <header>
+      <h1>User Dashboard</h1>
+      <p>Manage your account and view notifications</p>
+    </header>
+
+    <div class="dashboard-container fade-in">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">Dashboard</h2>
+        <div class="user-welcome">
+          <div class="user-avatar">
+            <span id="avatarInitial">U</span>
+          </div>
+          <span>Welcome, <span id="welcomeName">User</span></span>
         </div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-value" id="unreadCount">0</div>
+          <div class="stat-label">Unread Notifications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="readCount">0</div>
+          <div class="stat-label">Read Notifications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Service Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Upcoming Appointments</div>
+        </div>
+      </div>
+
+      <div class="dashboard-sections">
+        <!-- Unread Notifications Section -->
+        <div class="dashboard-section">
+          <h3 class="section-title"><i class="fas fa-bell"></i> New Notifications</h3>
+          <div id="unreadList" class="notification-list"></div>
+        </div>
+
+        <!-- Read Notifications Section -->
+        <div class="dashboard-section">
+          <h3 class="section-title"><i class="fas fa-check-circle"></i> Read Notifications</h3>
+          <div id="readList" class="notification-list"></div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <script>
+    // Update the stats counts
+    function updateStats() {
+      const unread = load(UNREAD_KEY);
+      const read = load(READ_KEY);
+      
+      document.getElementById('unreadCount').textContent = unread.length;
+      document.getElementById('readCount').textContent = read.length;
+    }
+    
+    // Call updateStats after rendering
+    const originalRenderLists = renderLists;
+    renderLists = function() {
+      originalRenderLists();
+      updateStats();
+    };
+    
+    // Initial update
+    document.addEventListener('DOMContentLoaded', function() {
+      updateStats();
+      
+      // Add a demo notification if empty
+      const unread = load(UNREAD_KEY);
+      if (unread.length === 0) {
+        setTimeout(() => {
+          simulateAdmin("Welcome to your dashboard! Here you can manage your notifications.");
+        }, 1000);
+      }
+    });
+  </script>
 </body>
 </html>
