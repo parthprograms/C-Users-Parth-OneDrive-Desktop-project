@@ -3,320 +3,835 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Schedule Service</title>
+  <title>EV Service Scheduling - Pune</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      background-image: url('new6.jpg');
-      background-position: center;
-      background-repeat: no-repeat;
-      font-family: Arial, sans-serif;
-      background-color: #050506;
-      color: #000;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     header {
-      background: rgba(3, 4, 5, 0.4);
-      padding: 20px;
       text-align: center;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 30px 0;
+      margin-bottom: 30px;
     }
 
     header h1 {
-      font-size: 48px;
-      font-weight: bold;
-      font-style: italic;
-      letter-spacing: 2px;
-      background: linear-gradient(to right, #ffffff, #cce0ff);
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-      background-color: rgba(255, 255, 255, 0.1);
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 10px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 10px;
     }
 
-    .form-section {
-      background: #fff;
-      padding: 20px;
-      margin: 20px auto;
-      width: 90%;
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
       max-width: 600px;
-      border-radius: 10px;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 10px;
-      margin: 15px 0;
-      border-radius: 5px;
-      border: 1px solid #000;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #003366;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0055aa;
-      transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0, 85, 170, 0.4);
+      margin: 0 auto;
     }
 
     .back-button {
       position: absolute;
       top: 20px;
       left: 20px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border: 2px solid #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       color: #fff;
-      font-weight: bold;
-      padding: 10px 18px;
-      border-radius: 8px;
+      padding: 12px 20px;
+      border-radius: 50px;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
 
     .back-button:hover {
-       background-color: #e9e9ea;
-            transform: translateX(-5px);
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .service-centers {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
+    .selection-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
-    .center-card {
-      background: #fff;
-      width: 80%;
-      margin-bottom: 30px;
-      padding: 20px;
-      border-radius: 15px;
-      border: 1px solid #ccc;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
       text-align: center;
-      animation: fadeInUp 0.8s ease;
+      color: #00c9ff;
+      font-weight: 600;
     }
 
-    .center-card img {
-      max-width: 100%;
-      height: 200px;
+    .district-selection {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .district-label {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .pune-highlight {
+      background: linear-gradient(135deg, rgba(0, 201, 255, 0.2), rgba(0, 255, 149, 0.2));
+      padding: 15px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 1px solid rgba(0, 201, 255, 0.3);
+    }
+
+    .pune-highlight i {
+      color: #00ff95;
+      margin-right: 10px;
+    }
+
+    .district-card {
+      width: 220px;
+      height: 220px;
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 0 auto;
+      position: relative;
+      border: 3px solid #00ff95;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 25px rgba(0, 255, 149, 0.5);
+    }
+
+    .district-card img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 10px;
     }
 
-    .hidden {
+    .district-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: white;
+      padding: 20px 15px 15px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .model-selection {
+      text-align: center;
+    }
+
+    .model-label {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .model-select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .model-select:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .model-select option {
+      background: #2c5364;
+      color: white;
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, #00c9ff, #00ff95);
+      color: #0f2027;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 201, 255, 0.4);
+    }
+
+    .search-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 201, 255, 0.6);
+    }
+
+    /* Booking Page Styles */
+    #bookingPage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 40px 20px;
       display: none;
     }
 
-    .booking-form {
-      background: #fff;
-      padding: 20px;
-      width: 90%;
-      max-width: 500px;
-      margin: 20px auto;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      animation: fadeIn 1s ease-in-out;
+    .booking-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 25px;
+      padding: 40px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
 
-    .booking-form h2 {
-      text-align: center;
-      color: #003366;
-    }
-
-    #loader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
+    .close-booking {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       color: white;
-      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.5rem;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    .close-booking:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .booking-header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .booking-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .booking-header p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .slot-info {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #00c9ff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .phone-input {
+      display: flex;
+    }
+
+    .phone-prefix {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .phone-input input {
+      border-radius: 0 12px 12px 0;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #00c9ff, #00ff95);
+      color: #0f2027;
+      border: none;
+      padding: 18px 50px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: block;
+      margin: 40px auto 20px;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 5px 20px rgba(0, 201, 255, 0.4);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 201, 255, 0.6);
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* Slot status styles */
+    .slot-status {
+      margin-top: 5px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .slot-available {
+      color: #00ff95;
+    }
+
+    .slot-full {
+      color: #ff6b6b;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      
+      .district-card {
+        width: 180px;
+        height: 180px;
+      }
+      
+      .booking-container {
+        padding: 30px 20px;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .slot-info {
+        position: relative;
+        margin-top: 15px;
+        justify-content: center;
       }
     }
 
+    /* Animation */
     @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
     }
   </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back-button" href="#" onclick="history.back()">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <header>
+      <h1>Schedule Your EV Service</h1>
+      <p>Currently serving Pune district only</p>
+    </header>
+
+    <div class="selection-container">
+      <div class="district-selection">
+        <h2 class="section-title">Service Area</h2>
+        <span class="district-label">We currently operate in the following district:</span>
+        
+        <div class="pune-highlight">
+          <i class="fas fa-info-circle"></i>
+          This service is currently available only in Pune district. We're expanding soon!
+        </div>
+        <div class="pune-highlight">
+          <i class="fas fa-info-circle"></i>
+          The timing of the center is from 9AM to 6PM,book your slot accordingly!
+        </div>
+
+        <div class="district-card">
+          <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=500&h=500&fit=crop" alt="Pune">
+          <div class="district-name">Pune</div>
+        </div>
+      </div>
+
+      <div class="model-selection">
+        <h2 class="section-title">Select Your EV Model</h2>
+        <span class="model-label">Choose your electric vehicle model:</span>
+        
+        <select class="model-select" id="scooterModel">
+          <option value="">-- Select Scooter/Bike Model --</option>
+          <option value="Ola S1 Pro">Ola S1 Pro</option>
+          <option value="Ather 450X">Ather 450X</option>
+          <option value="Chetak">Chetak</option>
+          <option value="TVS iQube">TVS iQube</option>
+          <option value="Bajaj Chetak">Bajaj Chetak</option>
+          <option value="Hero Electric Optima">Hero Electric Optima</option>
+        </select>
+        
+        <button class="search-btn" id="searchCenters">Schedule Service</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Page (initially hidden) -->
+  <div id="bookingPage">
+    <div class="booking-container">
+      <div class="close-booking" id="closeBooking">
+        <i class="fas fa-times"></i>
+      </div>
+      
+      <div class="booking-header">
+        <h2>Schedule Your Service</h2>
+        <p>Fill in your details to book your service appointment in Pune</p>
+        <div class="slot-info">
+          <i class="fas fa-users"></i>
+          <span>Max 3 bookings per slot</span>
+        </div>
+      </div>
+      
+      <form id="bookingForm">
+        <input type="hidden" id="selectedCenter">
+        <input type="hidden" id="selectedDistrict" value="Pune">
+        <input type="hidden" id="selectedModel">
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="example@gmail.com" required>
+            <span class="error-message" id="emailError"></span>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <div class="phone-input">
+              <div class="phone-prefix">+91</div>
+              <input type="tel" id="phone" placeholder="1234567890" required>
+            </div>
+            <span class="error-message" id="phoneError"></span>
+          </div>
+          
+          <div class="form-group">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="timeSlot">Preferred Time Slot</label>
+            <select id="timeSlot" required>
+              <option value="">-- Select Time Slot --</option>
+              <option value="9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</option>
+              <option value="11:00 AM - 1:00 PM">11:00 AM - 1:00 PM</option>
+              <option value="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</option>
+              <option value="4:00 PM - 6:00 PM">4:00 PM - 6:00 PM</option>
+             
+            </select>
+            <div class="slot-status" id="slotStatus"></div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="address">Address in Pune</label>
+          <input type="text" id="address" placeholder="Your complete address in Pune" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="vehicleNumber">Vehicle Number</label>
+          <input type="text" id="vehicleNumber" placeholder="e.g. MH12AB1234" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="serviceType">Service Type</label>
+          <select id="serviceType" required>
+            <option value="">-- Select Service Type --</option>
+            <option value="Regular Service">Regular Service</option>
+            <option value="Battery Check">Battery Check</option>
+            <option value="Software Update">Software Update</option>
+            <option value="Brake Service">Brake Service</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="submit-btn">Confirm Booking</button>
+      </form>
+    </div>
+  </div>
 
   <script>
-    // Show loader and then remove it after 1 second
-    document.addEventListener("DOMContentLoaded", function () {
-      setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-      }, 1000);
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+      // Service centers data - only Pune
+      const centers = {
+        "Pune": {
+          "Ola S1 Pro": [
+            { 
+              name: "Ola Electric Experience Center", 
+              address: "12 MG Road, Pune", 
+              time: "9:00 AM - 6:00 PM", 
+              image: "https://images.unsplash.com/photo-1620371350502-999d2fee54b2?w=500&h=300&fit=crop",
+              phone: "+91 9876543210"
+            }
+          ],
+          "Ather 450X": [
+            { 
+              name: "Ather Space Pune", 
+              address: "45 FC Road, Pune", 
+              time: "10:00 AM - 7:00 PM", 
+              image: "https://images.unsplash.com/photo-1567767292271-4e3c927e51b3?w=500&h=300&fit=crop",
+              phone: "+91 9765432109"
+            }
+          ],
+          "Chetak": [
+            { 
+              name: "Bajaj Chetak Service Center", 
+              address: "78 JM Road, Pune", 
+              time: "9:30 AM - 5:30 PM", 
+              image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=500&h=300&fit=crop",
+              phone: "+91 9654321098"
+            }
+          ],
+          "TVS iQube": [
+            { 
+              name: "TVS iQube Service Point", 
+              address: "23 Koregaon Park, Pune", 
+              time: "9:00 AM - 6:00 PM", 
+              image: "https://images.unsplash.com/photo-1603712610494-93e15452cf6e?w=500&h=300&fit=crop",
+              phone: "+91 9543210987"
+            }
+          ],
+          "Bajaj Chetak": [
+            { 
+              name: "Bajaj Chetak Service Center", 
+              address: "78 JM Road, Pune", 
+              time: "9:30 AM - 5:30 PM", 
+              image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=500&h=300&fit=crop",
+              phone: "+91 9654321098"
+            }
+          ],
+          "Hero Electric Optima": [
+            { 
+              name: "Hero Electric Service Point", 
+              address: "34 FC Road, Pune", 
+              time: "9:00 AM - 6:00 PM", 
+              image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=500&h=300&fit=crop",
+              phone: "+91 9456789012"
+            }
+          ]
+        }
+      };
 
-    const centers = {
-  "Pune": [
-    {
-      name: "EV Service Hub Pune",
-      address: "123 Baner Road, Pune",
-      time: "9:00 AM - 6:00 PM",
-      image: "center_pune.jpg"
-    }
-  ],
-  "Mumbai": [
-    {
-      name: "Mumbai EV Garage",
-      address: "456 Andheri West, Mumbai",
-      time: "10:00 AM - 7:00 PM",
-      image: "center_mumbai.jpg"
-    }
-  ],
-  "Kolhapur": [
-    {
-      name: "Kolhapur EV Point",
-      address: "789 Rankala Road, Kolhapur",
-      time: "9:30 AM - 5:30 PM",
-      image: "center_kolhapur.jpg"
-    }
-  ],
-  "Nashik": [],
-  "Nagpur": [],
-  "Satara": [],
-  "Solapur": []
-};
-
-
-    function showCenters() {
-      const district = document.getElementById("district").value;
-      const model = document.getElementById("scooterModel").value;
-      const container = document.getElementById("centerCards");
-      container.innerHTML = "";
-
-      if (district && model) {
-        const districtCenters = centers[district] || [];
-        if (districtCenters.length === 0) {
-          container.innerHTML = `<p style="color: white;">No service centers found in ${district}.</p>`;
+      // Initialize bookings in localStorage if not exists
+      if (!localStorage.getItem('bookings')) {
+        localStorage.setItem('bookings', JSON.stringify({}));
+      }
+      
+      // Search centers - directly open booking form for Pune
+      document.getElementById('searchCenters').addEventListener('click', function() {
+        const model = document.getElementById('scooterModel').value;
+        
+        if (!model) {
+          alert('Please select an EV model.');
+          return;
+        }
+        
+        // Set the selected model
+        document.getElementById('selectedModel').value = model;
+        
+        // Set the service center based on model
+        let centerName = "EV Service Center Pune";
+        let centerTime = "9:00 AM - 6:00 PM";
+        
+        if (centers["Pune"][model]) {
+          centerName = centers["Pune"][model][0].name;
+          centerTime = centers["Pune"][model][0].time;
+        }
+        
+        document.getElementById('selectedCenter').value = centerName;
+        
+        openBookingForm(centerName, centerTime, "Pune", model);
+      });
+      
+      // Open booking form
+      function openBookingForm(centerName, centerTime, district, model) {
+        document.getElementById('bookingPage').style.display = 'block';
+        
+        // Set today as min date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+        document.getElementById('date').value = today;
+        
+        // Update slot availability
+        updateSlotAvailability(today);
+      }
+      
+      // Close booking form
+      document.getElementById('closeBooking').addEventListener('click', function() {
+        document.getElementById('bookingPage').style.display = 'none';
+      });
+      
+      // Update slot availability when date changes
+      document.getElementById('date').addEventListener('change', function() {
+        updateSlotAvailability(this.value);
+      });
+      
+      // Update slot availability when time slot is focused
+      document.getElementById('timeSlot').addEventListener('focus', function() {
+        const date = document.getElementById('date').value;
+        if (date) {
+          updateSlotAvailability(date);
+        }
+      });
+      
+      // Function to update slot availability
+      function updateSlotAvailability(date) {
+        const timeSlotSelect = document.getElementById('timeSlot');
+        const slotStatus = document.getElementById('slotStatus');
+        const bookings = JSON.parse(localStorage.getItem('bookings'));
+        
+        // Reset all options first
+        for (let i = 1; i < timeSlotSelect.options.length; i++) {
+          timeSlotSelect.options[i].disabled = false;
+          timeSlotSelect.options[i].classList.remove('disabled-slot');
+        }
+        
+        // Check if we have bookings for this date
+        if (bookings[date]) {
+          let statusHtml = '';
+          let hasFullSlots = false;
+          let hasAvailableSlots = false;
+          
+          for (let i = 1; i < timeSlotSelect.options.length; i++) {
+            const slot = timeSlotSelect.options[i].value;
+            const slotBookings = bookings[date][slot] || [];
+            
+            if (slotBookings.length >= 3) {
+              // Disable full slots
+              timeSlotSelect.options[i].disabled = true;
+              timeSlotSelect.options[i].classList.add('disabled-slot');
+              statusHtml += `<div class="slot-full"><i class="fas fa-times-circle"></i> ${slot} - Fully Booked (3/3)</div>`;
+              hasFullSlots = true;
+            } else if (slotBookings.length > 0) {
+              statusHtml += `<div class="slot-available"><i class="fas fa-check-circle"></i> ${slot} - ${3 - slotBookings.length} spots left</div>`;
+              hasAvailableSlots = true;
+            } else {
+              statusHtml += `<div class="slot-available"><i class="fas fa-check-circle"></i> ${slot} - 3 spots available</div>`;
+              hasAvailableSlots = true;
+            }
+          }
+          
+          slotStatus.innerHTML = statusHtml;
         } else {
-          districtCenters.forEach(center => {
-            const card = document.createElement("div");
-            card.className = "center-card";
-            card.innerHTML = `
-              <img src="${center.image}" alt="${center.name}">
-              <h3>${center.name}</h3>
-              <p><strong>Address:</strong> ${center.address}</p>
-              <p><strong>Timings:</strong> ${center.time}</p>
-              <button onclick="openBookingForm('${center.name}')">Request Booking</button>
-            `;
-            container.appendChild(card);
-          });
-          document.getElementById("centers").classList.remove("hidden");
+          // No bookings for this date, all slots available
+          let statusHtml = '';
+          for (let i = 1; i < timeSlotSelect.options.length; i++) {
+            const slot = timeSlotSelect.options[i].value;
+            statusHtml += `<div class="slot-available"><i class="fas fa-check-circle"></i> ${slot} - 3 spots available</div>`;
+          }
+          slotStatus.innerHTML = statusHtml;
         }
       }
-    }
-
-    function openBookingForm(centerName) {
-      document.getElementById("bookingForm").classList.remove("hidden");
-      document.getElementById("selectedCenter").value = centerName;
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("date").setAttribute("min", today);
-    }
-
-    function sendRequest() {
-      const name = document.getElementById("userName").value;
-      const phone = document.getElementById("userPhone").value;
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("timeSlot").value;
-      const center = document.getElementById("selectedCenter").value;
-
-      if (name && phone && date && time) {
-        alert(`Request sent to ${center}!\nName: ${name}\nPhone: ${phone}\nDate: ${date}\nTime: ${time}`);
-        document.getElementById("bookingForm").reset();
-        document.getElementById("bookingForm").classList.add("hidden");
-      } else {
-        alert("Please fill all fields.");
+      
+      // Form validation and submission
+      document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (validateForm()) {
+          const date = document.getElementById('date').value;
+          const timeSlot = document.getElementById('timeSlot').value;
+          
+          // Check if slot is still available
+          const bookings = JSON.parse(localStorage.getItem('bookings'));
+          const slotBookings = bookings[date] && bookings[date][timeSlot] ? bookings[date][timeSlot] : [];
+          
+          if (slotBookings.length >= 3) {
+            alert('Sorry, this time slot is now fully booked. Please choose another time slot.');
+            updateSlotAvailability(date);
+            return;
+          }
+          
+          const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            date: date,
+            time: timeSlot,
+            address: document.getElementById('address').value,
+            vehicleNumber: document.getElementById('vehicleNumber').value,
+            scooterType: document.getElementById('scooterType').value,
+            serviceType: document.getElementById('serviceType').value,
+            center: document.getElementById('selectedCenter').value,
+            district: document.getElementById('selectedDistrict').value,
+            model: document.getElementById('selectedModel').value,
+            bookingId: 'B' + Date.now() // Generate a unique booking ID
+          };
+          
+          // Save booking to localStorage
+          if (!bookings[date]) {
+            bookings[date] = {};
+          }
+          
+          if (!bookings[date][timeSlot]) {
+            bookings[date][timeSlot] = [];
+          }
+          
+          bookings[date][timeSlot].push(formData);
+          localStorage.setItem('bookings', JSON.stringify(bookings));
+          
+          // Show success message
+          alert(`Booking confirmed!\n\nBooking ID: ${formData.bookingId}\nService Center: ${formData.center}\nDate: ${formData.date}\nTime: ${formData.time}\n\nWe'll contact you at ${formData.phone} for confirmation.`);
+          
+          // Reset form and close booking page
+          this.reset();
+          document.getElementById('bookingPage').style.display = 'none';
+        }
+      });
+      
+      // Form validation
+      function validateForm() {
+        let isValid = true;
+        
+        // Email validation
+        const email = document.getElementById('email').value;
+        const emailError = document.getElementById('emailError');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(email)) {
+          emailError.textContent = 'Please enter a valid email address';
+          isValid = false;
+        } else {
+          emailError.textContent = '';
+        }
+        
+        // Phone validation
+        const phone = document.getElementById('phone').value;
+        const phoneError = document.getElementById('phoneError');
+        const phoneRegex = /^[0-9]{10}$/;
+        
+        if (!phoneRegex.test(phone)) {
+          phoneError.textContent = 'Please enter a valid 10-digit phone number';
+          isValid = false;
+        } else {
+          phoneError.textContent = '';
+        }
+        
+        // Date validation
+        const date = document.getElementById('date').value;
+        if (!date) {
+          alert('Please select a date');
+          isValid = false;
+        }
+        
+        // Time slot validation
+        const timeSlot = document.getElementById('timeSlot').value;
+        if (!timeSlot) {
+          alert('Please select a time slot');
+          isValid = false;
+        }
+        
+        return isValid;
       }
-    }
+    });
   </script>
-</head>
-
-<body>
-  <div id="loader">Loading...</div>
-
-  <a class="back-button" href="home.html">← Back to Home</a>
-
-  <header>
-    <h1>Schedule Your EV Service</h1>
-  </header>
-
-  <section class="form-section">
-    <label for="district">Select Your District (Maharashtra):</label>
-    <select id="district">
-      <option value="">-- Select District --</option>
-      <option value="Pune">Pune</option>
-      <option value="Mumbai">Mumbai</option>
-      <option value="Kolhapur">Kolhapur</option>
-      <option value="Nashik">Nashik</option>
-      <option value="Nagpur">Nagpur</option>
-      <option value="Satara">Satara</option>
-      <option value="Solapur">Solapur</option>
-    </select>
-
-    <label for="scooterModel">Select Your EV Model:</label>
-    <select id="scooterModel">
-      <option value="">-- Select Scooter/Bike Model --</option>
-      <option value="Ola S1 Pro">Ola S1 Pro</option>
-      <option value="Ather 450X">Ather 450X</option>
-      <option value="Chetak">Chetak</option>
-      <option value="TVS iQube">TVS iQube</option>
-    </select>
-
-    <button onclick="showCenters()">Search Service Centers</button>
-  </section>
-
-  <section id="centers" class="service-centers hidden">
-    <div id="centerCards"></div>
-  </section>
-
-  <form id="bookingForm" class="booking-form hidden">
-    <h2>Request Your Service</h2>
-    <input type="hidden" id="selectedCenter" />
-    <label>Name:</label>
-    <input type="text" id="userName" placeholder="Your Full Name" required />
-    
-    <label>Phone Number:</label>
-    <input type="tel" id="userPhone" placeholder="10-digit Phone Number" pattern="[0-9]{10}" required />
-
-    <label>Select Date:</label>
-    <input type="date" id="date" required />
-
-    <label>Select Time:</label>
-    <input type="time" id="timeSlot" required />
-
-    <button type="button" onclick="sendRequest()">Send Request to the Service Centre</button>
-  </form>
 </body>
 </html>
