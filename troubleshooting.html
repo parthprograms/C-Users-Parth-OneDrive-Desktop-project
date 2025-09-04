@@ -4,159 +4,465 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troubleshooting Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: rgb(0, 0, 0); /* helps you see if background fails */
-            background-image: url('new6.jpg');
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1643330683233-ff2ac89b002c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1972&q=80');
             background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #f0f0f0;
+            background-position: center;
+            background-blend-mode: overlay;
         }
 
-        section {
-            padding: 40px;
-            background: rgba(22, 12, 86, 0.603);
-            margin: 60px auto;
-            border-radius: 15px;
-            width: 85%;
-            max-width: 1000px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        h2 {
-            font-family: sans-serif;
-            font-style: italic;
+        header {
             text-align: center;
-            font-size: 32px;
-            color: #66ccff;
+            padding: 30px 0;
             margin-bottom: 30px;
         }
 
-        label {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ddd;
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #00c9ff, #92fe9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
         }
 
-        select {
-            padding: 10px;
-            font-size: 16px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 300px;
-            display: block;
-            background-color: #000000;
-            color: #fff;
-            border: 1px solid #555;
-            border-radius: 5px;
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            display: none;
-        }
-
-        th, td {
-            border: 1px solid #444;
-            padding: 15px;
-            text-align: left;
-            font-size: 16px;
-            color: #f0f0f0;
-        }
-
-        th {
-            background: #003366;
-            color: #fff;
-        }
-
-        /* Back Button */
         .back-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #125569;
-            color: white;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 50px;
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: all 0.3s ease;
-            position: relative;
-            border-style: solid;
-            border-color: whitesmoke;
+            backdrop-filter: blur(10px);
         }
 
         .back-button:hover {
-            background-color: #e9e9ea;
+            background: rgba(255, 255, 255, 0.2);
             transform: translateX(-5px);
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
-        }
-    </style>
-
-    <script>
-        if (!sessionStorage.getItem("loggedInUser")) {
-            window.location.href = "index.html"; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        function showTable() {
-            var selectedModel = document.getElementById("scooterModel").value;
-            var tables = document.querySelectorAll("table");
+        .guide-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
 
-            tables.forEach(function(table) {
-                table.style.display = "none";
-            });
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #00c9ff;
+            font-weight: 600;
+        }
 
-            if (selectedModel) {
-                document.getElementById(selectedModel).style.display = "table";
+        .model-select-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .model-label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .model-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .model-select:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .model-select option {
+            background: #2c5364;
+            color: white;
+        }
+
+        .troubleshooting-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .troubleshooting-table th, 
+        .troubleshooting-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .troubleshooting-table th {
+            background: linear-gradient(135deg, rgba(0, 201, 255, 0.2), rgba(0, 255, 149, 0.2));
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .troubleshooting-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .troubleshooting-table tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .problem-cell {
+            font-weight: 500;
+            color: #00c9ff;
+        }
+
+        .solution-cell {
+            color: #92fe9d;
+        }
+
+        .no-model-selected {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            display: block;
+        }
+
+        .model-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .model-image {
+            width: 200px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .model-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .model-details {
+            text-align: left;
+        }
+
+        .model-name {
+            font-size: 1.5rem;
+            color: #00c9ff;
+            margin-bottom: 10px;
+        }
+
+        .model-description {
+            opacity: 0.9;
+            max-width: 400px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .model-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .model-details {
+                text-align: center;
+            }
+            
+            .troubleshooting-table {
+                display: block;
+                overflow-x: auto;
             }
         }
-    </script>
+    </style>
 </head>
 <body>
-    <section>
-        <a href="home.html" class="back-button">← Back to Home</a>
+    <div class="container">
+        <a class="back-button" href="home.html">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
 
-        <h2>Troubleshooting Guide</h2>
+        <header>
+            <h1>Troubleshooting Guide</h1>
+            <p>Find solutions to common issues with your electric vehicle</p>
+        </header>
 
-        <label for="scooterModel"><strong>Select Scooter Model:</strong></label>
-        <select id="scooterModel" onchange="showTable()">
-            <option value="">-- Choose Model --</option>
-            <option value="modelA">eScoot Alpha</option>
-            <option value="modelB">VoltRider X</option>
-            <option value="modelC">ZappGo Lite</option>
-        </select>
+        <div class="guide-container fade-in">
+            <h2 class="section-title">Select Your Vehicle Model</h2>
+            
+            <div class="model-select-container">
+                <span class="model-label">Choose your electric vehicle model:</span>
+                
+                <select class="model-select" id="scooterModel" onchange="showTable()">
+                    <option value="">-- Choose Model --</option>
+                    <option value="olaS1Pro">Ola S1 Pro</option>
+                    <option value="ather450X">Ather 450X</option>
+                    <option value="chetak">Bajaj Chetak</option>
+                    <option value="tvsIqube">TVS iQube</option>
+                </select>
+            </div>
 
-        <!-- Table for eScoot Alpha -->
-        <table id="modelA">
-            <tr><th>Problem</th><th>Solution</th></tr>
-            <tr><td>Battery not charging</td><td>Check charger, power source, and battery health.</td></tr>
-            <tr><td>Throttle unresponsive</td><td>Check throttle wiring and replace if faulty.</td></tr>
-            <tr><td>Strange noise from wheels</td><td>Inspect bearings and brake alignment.</td></tr>
-        </table>
+            <div id="modelInfo" class="model-info" style="display: none;">
+                <div class="model-image">
+                    <img id="modelImg" src="" alt="Model Image">
+                </div>
+                <div class="model-details">
+                    <h3 id="modelName" class="model-name"></h3>
+                    <p id="modelDesc" class="model-description"></p>
+                </div>
+            </div>
 
-        <!-- Table for VoltRider X -->
-        <table id="modelB">
-            <tr><th>Problem</th><th>Solution</th></tr>
-            <tr><td>Scooter shuts down randomly</td><td>Check battery connectors and controller unit.</td></tr>
-            <tr><td>LED display flickers</td><td>Inspect fuse and secure wiring connections.</td></tr>
-            <tr><td>Loose handlebar</td><td>Tighten handlebar stem screws.</td></tr>
-        </table>
+            <div id="noModel" class="no-model-selected">
+                <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                <h3>Select a vehicle model</h3>
+                <p>Choose your electric vehicle model from the dropdown to view troubleshooting guide</p>
+            </div>
 
-        <!-- Table for ZappGo Lite -->
-        <table id="modelC">
-            <tr><th>Problem</th><th>Solution</th></tr>
-            <tr><td>Scooter vibrates on uneven roads</td><td>Check shock absorbers and tire pressure.</td></tr>
-            <tr><td>Low range per charge</td><td>Ensure full charge and avoid high-speed usage frequently.</td></tr>
-            <tr><td>Brake squealing</td><td>Clean brake pads or replace if worn out.</td></tr>
-        </table>
-    </section>
+            <!-- Table for Ola S1 Pro -->
+            <table id="olaS1Pro" class="troubleshooting-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Problem</th>
+                        <th width="60%">Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="problem-cell">Battery not charging</td>
+                        <td class="solution-cell">Check charger connection, ensure power source is working, and verify battery health in the app. If issue persists, contact service center.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Throttle unresponsive</td>
+                        <td class="solution-cell">Check for error codes on display, restart the scooter, and inspect throttle wiring for damage.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Reduced range</td>
+                        <td class="solution-cell">Check tire pressure, avoid frequent hard acceleration, and ensure brakes aren't dragging. Update to latest firmware.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Connectivity issues</td>
+                        <td class="solution-cell">Restart the mobile app, ensure Bluetooth is enabled, and check for app updates in your app store.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Table for Ather 450X -->
+            <table id="ather450X" class="troubleshooting-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Problem</th>
+                        <th width="60%">Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="problem-cell">Scooter shuts down randomly</td>
+                        <td class="solution-cell">Check battery connectors and ensure they're secure. Update controller software at nearest service center.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">LED display flickers</td>
+                        <td class="solution-cell">Inspect fuse box and secure wiring connections. Check for moisture in display unit.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Charging port issues</td>
+                        <td class="solution-cell">Clean charging port with dry cloth, ensure charger is properly connected. Avoid using damaged charging cables.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Unusual motor noise</td>
+                        <td class="solution-cell">Check for debris in motor area. If noise persists, visit service center for motor inspection.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Table for Bajaj Chetak -->
+            <table id="chetak" class="troubleshooting-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Problem</th>
+                        <th width="60%">Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="problem-cell">Loose handlebar</td>
+                        <td class="solution-cell">Tighten handlebar stem screws with appropriate torque. Do not overtighten.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Brake squealing</td>
+                        <td class="solution-cell">Clean brake pads with isopropyl alcohol or replace if worn out. Check brake alignment.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Software glitches</td>
+                        <td class="solution-cell">Perform a system reset by holding power button for 10 seconds. Visit service center for updates.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Range anxiety</td>
+                        <td class="solution-cell">Use Eco mode for longer range, plan routes with charging stations, and avoid excessive weight.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Table for TVS iQube -->
+            <table id="tvsIqube" class="troubleshooting-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Problem</th>
+                        <th width="60%">Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="problem-cell">Scooter vibrates on uneven roads</td>
+                        <td class="solution-cell">Check shock absorbers for leaks and tire pressure. Ensure all bolts are properly tightened.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">App connectivity issues</td>
+                        <td class="solution-cell">Reinstall the TVS Connect app, ensure location permissions are granted, and check Bluetooth connectivity.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Charging time increased</td>
+                        <td class="solution-cell">Check power source voltage, use original charger, and avoid charging in extreme temperatures.</td>
+                    </tr>
+                    <tr>
+                        <td class="problem-cell">Error codes on display</td>
+                        <td class="solution-cell">Note down error code and refer to manual. Common codes can be cleared with a system restart.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!sessionStorage.getItem("loggedInUser")) {
+                window.location.href = "index.html"; 
+            }
+
+            // Model data with images and descriptions
+            const modelData = {
+                olaS1Pro: {
+                    name: "Ola S1 Pro",
+                    image: "https://images.unsplash.com/photo-1620371350502-999d2fee54b2?w=400&h=300&fit=crop",
+                    description: "Premium electric scooter with advanced features and long range capability."
+                },
+                ather450X: {
+                    name: "Ather 450X",
+                    image: "https://images.unsplash.com/photo-1567767292271-4e3c927e51b3?w=400&h=300&fit=crop",
+                    description: "Performance-oriented electric scooter with smart connectivity features."
+                },
+                chetak: {
+                    name: "Bajaj Chetak",
+                    image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=400&h=300&fit=crop",
+                    description: "Classic design meets modern electric technology in this stylish scooter."
+                },
+                tvsIqube: {
+                    name: "TVS iQube",
+                    image: "https://images.unsplash.com/photo-1603712610494-93e15452cf6e?w=400&h=300&fit=crop",
+                    description: "Smart electric scooter with digital connectivity and efficient performance."
+                }
+            };
+
+            // Function to show the appropriate table
+            window.showTable = function() {
+                var selectedModel = document.getElementById("scooterModel").value;
+                var tables = document.querySelectorAll(".troubleshooting-table");
+                var noModel = document.getElementById("noModel");
+                var modelInfo = document.getElementById("modelInfo");
+
+                // Hide all tables first
+                tables.forEach(function(table) {
+                    table.style.display = "none";
+                });
+
+                // Show model info or no selection message
+                if (selectedModel) {
+                    noModel.style.display = "none";
+                    modelInfo.style.display = "flex";
+                    
+                    // Update model info
+                    document.getElementById("modelName").textContent = modelData[selectedModel].name;
+                    document.getElementById("modelDesc").textContent = modelData[selectedModel].description;
+                    document.getElementById("modelImg").src = modelData[selectedModel].image;
+                    
+                    // Show the selected table
+                    document.getElementById(selectedModel).style.display = "table";
+                } else {
+                    noModel.style.display = "block";
+                    modelInfo.style.display = "none";
+                }
+            };
+        });
+    </script>
 </body>
 </html>
